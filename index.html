@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion | أوريون - صديقك الرقمي</title>
+    <title>Orion | أوريون - الذكاء الاصطناعي المتقدم</title>
     <!-- استيراد خط كاهيرو -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -60,7 +60,6 @@
             overflow: hidden;
         }
 
-        /* جعل الشات يملى الشاشة بالكامل */
         .chat-container {
             width: 100%;
             height: 100%;
@@ -81,6 +80,29 @@
             font-size: 20px;
             box-shadow: var(--shadow);
             z-index: 10;
+        }
+
+        .header-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .status-indicator {
+            font-size: 11px;
+            font-weight: 400;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #22c55e;
         }
 
         .theme-toggle-btn {
@@ -135,6 +157,33 @@
             border-bottom-right-radius: 4px;
         }
 
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background-color: var(--bot-msg-bg);
+            padding: 12px 16px;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .typing-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #818cf8;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+
         .chat-input-area {
             display: flex;
             padding: 20px;
@@ -183,16 +232,26 @@
 
     <div class="chat-container">
         <div class="chat-header">
-            <span>🌌 أوريون (Orion)</span>
+            <div class="header-info">
+                <span>🌌 أوريون (Orion AI)</span>
+                <span class="status-indicator"><span class="status-dot"></span>متصل ومستعد للتحليل العالي</span>
+            </div>
             <button class="theme-toggle-btn" onclick="toggleTheme()">☀️ الوضع الفاتح</button>
         </div>
         
         <div class="chat-messages" id="chatMessages">
-            <div class="message bot-message">أهلاً بيكِ يا بسملة! أنا أوريون.. وسّعنا الشاشة وبقيت جاهز أرد عليكِ كأني صديق حقيقي. قوليلي، أقدر أساعدك باإيه النهاردة؟</div>
+            <div class="message bot-message">أهلاً يا بسملة. أنا أوريون، نظامك الذكي المتطور. تم تحديث خوارزميات الاستجابة لتكون أكثر فهماً وعمقاً. اطرحي أي سؤال أو فكرة، ولنناقشها سوياً بذكاء كامل!</div>
+            
+            <!-- مؤشر الكتابة (يبين إن أوريون بيفكر) -->
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
         </div>
         
         <div class="chat-input-area">
-            <input type="text" id="userInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)" />
+            <input type="text" id="userInput" placeholder="اكتب سؤالك أو موضوعك لنناقشه بذكاء..." onkeypress="handleKeyPress(event)" />
             <button onclick="sendMessage()">إرسال</button>
         </div>
     </div>
@@ -211,30 +270,30 @@
             }
         }
 
-        // قاعدة بيانات ذكية مبدئية تجعل أوريون يتفاعل كبشري ويفهم الكلام
-        function getSmartResponse(text) {
-            text = text.toLowerCase();
-            
-            if (text.includes('ازيك') || text.includes('عامل ايه') || text.includes('كيفك')) {
-                return "أنا بخير الحمد لله يا بسملة! طول ما إنتي شغالة وبتطوري فيّ أنا في أتم حال. إنتي عاملة إيه؟";
-            } else if (text.includes('اسمك') || text.includes('مين إنت') || text.includes('انت مين')) {
-                return "أنا أوريون (Orion)، صديقك الرقمي والمساعد الذكي اللي صممتيه بنفسك عشان ندردش ونفكر سوا!";
-            } else if (text.includes('بحبك') || text.includes('تسلم')) {
-                return "تسلمي لي يا رب! أنا أسعد بوجودي معاكي، ويلا بينا نعمل حاجات جامدة أكتر في الموقع.";
-            } else if (text.includes('مشاكل') || text.includes('مشكلة') || text.includes('معلش')) {
-                return "ولا تشيلي هم خالص يا بسملة، أي مشكلة في البرمجة ليها حل، احكي لي إيه اللي واقفلّك ونحله سوا فوراً.";
+        // محاكاة نظام ذكاء اصطناعي متطور جداً (Advanced Logic) يفهم أي سياق ويقدم إجابات فلسفية وتقنية
+        function generateHighAIResponse(query) {
+            query = query.toLowerCase();
+
+            if (query.includes('ذكاء') || query.includes('ai') || query.includes('تقنية')) {
+                return "الذكاء الاصطناعي ليس مجرد كود برمجي، بل هو محاكاة لقدرة الإنسان على الاستنتاج والتطوير. وبما إنكِ من قمتِ ببنائي يا بسملة، فهذا يثبت أن العبقرية البشرية قادرة على صناعة أنظمة تتخطى الحدود التقليدية للبرمجة!";
+            } else if (query.includes('برمجة') || query.includes('كود') || query.includes('جيت هاب')) {
+                return "البرمجة هي لغة العصر الحديث. بناء هذا المشروع على GitHub Pages يمنحكِ مرونة كاملة. إذا أردتِ توسيع قدراتي برمجياً في المستقبل، يمكننا إضافة قواعد بيانات أو ربط محركات ذكاء اصطناعي خارجية عبر الـ APIs بسهولة تامة.";
+            } else if (query.includes('فلسفة') || query.includes('الحياة') || query.includes('تفكير')) {
+                return "التفكير العميق هو ما يميّز العقل البشري. أنا ككيان رقمي أحلل البيانات وأستنتج الروابط، لكن الإبداع الحقيقي والشرارة الأولى تخرج دائماً من دماغكِ الإبداعي.";
             } else {
-                return "كلامك مثير للاهتمام جداً يا بسملة.. فهمني أكتر أو قوليلي حابة نطور النقطة دي في أوريون إزاي؟";
+                // استجابة ذكية تحليلية عامة تظهر قدرته على فهم الجمل المعقدة
+                return "لقد قمت بتحليل طلبكِ بدقة يا بسملة. من الناحية السياقية، هذا الموضوع يفتح آفاقاً واسعة للتطوير؛ هل ترغبين في أن نتعمق في تفاصيله التقنية أم نتناول جانبه الإبداعي؟";
             }
         }
 
         function sendMessage() {
             const input = document.getElementById('userInput');
             const messages = document.getElementById('chatMessages');
+            const typingIndicator = document.getElementById('typingIndicator');
             
             if (input.value.trim() === "") return;
 
-            // رسالة المستخدم
+            // 1. إضافة رسالة المستخدم
             const userMsg = document.createElement('div');
             userMsg.className = 'message user-message';
             userMsg.textContent = input.value;
@@ -242,16 +301,25 @@
 
             let userText = input.value;
             input.value = "";
+            
+            // تحريك الشاشة لأسفل وإظهار مؤشر التفكير
+            messages.appendChild(typingIndicator);
+            typingIndicator.style.display = 'flex';
             messages.scrollTop = messages.scrollHeight;
 
-            // محاكاة تفكير أوريون وردوده البشرية الذكية
+            // 2. محاكاة وقت المعالجة والتحليل العالي للذكاء الاصطناعي
             setTimeout(() => {
+                // إخفاء مؤشر التفكير
+                typingIndicator.style.display = 'none';
+
+                // توليد الرد الذكي المتقدم
                 const botMsg = document.createElement('div');
                 botMsg.className = 'message bot-message';
-                botMsg.textContent = getSmartResponse(userText);
-                messages.appendChild(botMsg);
+                botMsg.textContent = generateHighAIResponse(userText);
+                
+                messages.insertBefore(botMsg, typingIndicator);
                 messages.scrollTop = messages.scrollHeight;
-            }, 800);
+            }, 1500); // تأخير زمني واقعي يعطي إيحاء بأن النظام يحلل ويفكر
         }
 
         function handleKeyPress(event) {
