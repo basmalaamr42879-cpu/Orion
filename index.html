@@ -242,7 +242,7 @@
         <div class="chat-messages" id="chatMessages">
             <div class="message bot-message">أهلاً يا بسملة. أنا أوريون، نظامك الذكي المتطور. تم تحديث خوارزميات الاستجابة لتكون أكثر فهماً وعمقاً. اطرحي أي سؤال أو فكرة، ولنناقشها سوياً بذكاء كامل!</div>
             
-            <!-- مؤشر الكتابة (يبين إن أوريون بيفكر) -->
+            <!-- مؤشر الكتابة -->
             <div class="typing-indicator" id="typingIndicator">
                 <div class="typing-dot"></div>
                 <div class="typing-dot"></div>
@@ -250,6 +250,7 @@
             </div>
         </div>
         
+        <!-- خانة الكتابة وزر الإرسال (رجعت في مكانها الصحيح) -->
         <div class="chat-input-area">
             <input type="text" id="userInput" placeholder="اكتب سؤالك أو موضوعك لنناقشه بذكاء..." onkeypress="handleKeyPress(event)" />
             <button onclick="sendMessage()">إرسال</button>
@@ -270,7 +271,6 @@
             }
         }
 
-        // محاكاة نظام ذكاء اصطناعي متطور جداً (Advanced Logic) يفهم أي سياق ويقدم إجابات فلسفية وتقنية
         function generateHighAIResponse(query) {
             query = query.toLowerCase();
 
@@ -281,7 +281,6 @@
             } else if (query.includes('فلسفة') || query.includes('الحياة') || query.includes('تفكير')) {
                 return "التفكير العميق هو ما يميّز العقل البشري. أنا ككيان رقمي أحلل البيانات وأستنتج الروابط، لكن الإبداع الحقيقي والشرارة الأولى تخرج دائماً من دماغكِ الإبداعي.";
             } else {
-                // استجابة ذكية تحليلية عامة تظهر قدرته على فهم الجمل المعقدة
                 return "لقد قمت بتحليل طلبكِ بدقة يا بسملة. من الناحية السياقية، هذا الموضوع يفتح آفاقاً واسعة للتطوير؛ هل ترغبين في أن نتعمق في تفاصيله التقنية أم نتناول جانبه الإبداعي؟";
             }
         }
@@ -302,24 +301,22 @@
             let userText = input.value;
             input.value = "";
             
-            // تحريك الشاشة لأسفل وإظهار مؤشر التفكير
+            // إظهار مؤشر التفكير تحت الرسائل
             messages.appendChild(typingIndicator);
             typingIndicator.style.display = 'flex';
             messages.scrollTop = messages.scrollHeight;
 
-            // 2. محاكاة وقت المعالجة والتحليل العالي للذكاء الاصطناعي
+            // 2. محاكاة وقت المعالجة
             setTimeout(() => {
-                // إخفاء مؤشر التفكير
                 typingIndicator.style.display = 'none';
 
-                // توليد الرد الذكي المتقدم
                 const botMsg = document.createElement('div');
                 botMsg.className = 'message bot-message';
                 botMsg.textContent = generateHighAIResponse(userText);
                 
                 messages.insertBefore(botMsg, typingIndicator);
                 messages.scrollTop = messages.scrollHeight;
-            }, 1500); // تأخير زمني واقعي يعطي إيحاء بأن النظام يحلل ويفكر
+            }, 1500);
         }
 
         function handleKeyPress(event) {
