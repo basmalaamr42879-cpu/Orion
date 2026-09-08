@@ -3,49 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion | أوريون - الذكاء الاصطناعي المتقدم</title>
+    <title>Orion | أوريون - المساعد الذكي</title>
     <!-- استيراد خط كاهيرو -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* الألوان الهادئة والمريحة للعين (الوضع الفاتح) */
         :root {
-            --bg-color: #f8fafc;
+            --bg-color: #f1f5f9;
             --container-bg: #ffffff;
-            --header-bg: linear-gradient(135deg, #4f46e5, #3b82f6);
-            --header-text: #ffffff;
-            --text-color: #1e293b;
-            --bot-msg-bg: #f1f5f9;
+            --header-bg: #ffffff;
+            --header-text: #0f172a;
+            --text-color: #334155;
+            --bot-msg-bg: #f8fafc;
             --bot-text-color: #1e293b;
             --user-msg-bg: #4f46e5;
             --user-text-color: #ffffff;
             --input-bg: #f8fafc;
-            --input-border: #cbd5e1;
-            --input-text: #1e293b;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            --border-color: rgba(0, 0, 0, 0.05);
+            --input-border: #e2e8f0;
+            --input-text: #0f172a;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+            --border-color: #e2e8f0;
         }
 
+        /* الألوان الهادئة والمريحة للعين (الوضع المظلم) */
         [data-theme="dark"] {
-            --bg-color: #0b0f19;
-            --container-bg: #121622;
-            --header-bg: linear-gradient(135deg, #4f46e5, #3b82f6);
-            --header-text: #ffffff;
-            --text-color: #f1f5f9;
-            --bot-msg-bg: #1e2235;
-            --bot-text-color: #e2e8f0;
-            --user-msg-bg: #4f46e5;
+            --bg-color: #0f172a;
+            --container-bg: #1e293b;
+            --header-bg: #1e293b;
+            --header-text: #f8fafc;
+            --text-color: #cbd5e1;
+            --bot-msg-bg: #334155;
+            --bot-text-color: #f1f5f9;
+            --user-msg-bg: #6366f1;
             --user-text-color: #ffffff;
-            --input-bg: #1a1f30;
-            --input-border: #334155;
-            --input-text: #f1f5f9;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            --border-color: rgba(255, 255, 255, 0.05);
+            --input-bg: #0f172a;
+            --input-border: #475569;
+            --input-text: #f8fafc;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            --border-color: #334155;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.25s, color 0.25s, border-color 0.25s;
         }
 
         body {
@@ -70,64 +72,64 @@
         }
 
         .chat-header {
-            background: var(--header-bg);
+            background-color: var(--header-bg);
             color: var(--header-text);
-            padding: 18px 25px;
+            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 700;
-            font-size: 20px;
-            box-shadow: var(--shadow);
+            font-size: 18px;
+            border-bottom: 1px solid var(--border-color);
             z-index: 10;
         }
 
         .header-info {
             display: flex;
             flex-direction: column;
+            gap: 2px;
         }
 
         .status-indicator {
             font-size: 11px;
             font-weight: 400;
-            opacity: 0.9;
+            opacity: 0.7;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
         }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #22c55e;
+            width: 7px;
+            height: 7px;
+            background-color: #10b981;
             border-radius: 50%;
             display: inline-block;
-            box-shadow: 0 0 8px #22c55e;
         }
 
         .theme-toggle-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 10px;
+            background: var(--bot-msg-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 7px 14px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             font-family: 'Cairo', sans-serif;
             font-weight: 600;
         }
 
         .theme-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            opacity: 0.85;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 25px;
+            padding: 24px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 16px;
             scroll-behavior: smooth;
             max-width: 900px;
             width: 100%;
@@ -137,10 +139,11 @@
         .message {
             max-width: 75%;
             padding: 14px 18px;
-            border-radius: 16px;
-            font-size: 15px;
+            border-radius: 14px;
+            font-size: 14.5px;
             line-height: 1.6;
             word-wrap: break-word;
+            box-shadow: var(--shadow);
         }
 
         .bot-message {
@@ -148,6 +151,7 @@
             color: var(--bot-text-color);
             align-self: flex-start;
             border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
         }
 
         .user-message {
@@ -162,15 +166,16 @@
             align-self: flex-start;
             background-color: var(--bot-msg-bg);
             padding: 12px 16px;
-            border-radius: 16px;
+            border-radius: 14px;
             border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
             gap: 5px;
             align-items: center;
         }
 
         .typing-dot {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             background-color: #818cf8;
             border-radius: 50%;
             animation: bounce 1.4s infinite ease-in-out both;
@@ -184,9 +189,10 @@
             40% { transform: scale(1.0); }
         }
 
+        /* حاوية الإرسال ثابتة وواضحة جداً في الأسفل */
         .chat-input-area {
             display: flex;
-            padding: 20px;
+            padding: 18px 24px;
             background-color: var(--container-bg);
             border-top: 1px solid var(--border-color);
             gap: 12px;
@@ -197,34 +203,34 @@
 
         .chat-input-area input {
             flex: 1;
-            padding: 14px 18px;
+            padding: 13px 18px;
             border: 1px solid var(--input-border);
-            border-radius: 14px;
+            border-radius: 12px;
             background-color: var(--input-bg);
             color: var(--input-text);
             font-family: 'Cairo', sans-serif;
-            font-size: 15px;
+            font-size: 14px;
             outline: none;
         }
 
         .chat-input-area input:focus {
-            border-color: #4f46e5;
+            border-color: #6366f1;
         }
 
         .chat-input-area button {
-            background-color: #4f46e5;
+            background-color: #6366f1;
             color: white;
             border: none;
-            padding: 0 25px;
-            border-radius: 14px;
+            padding: 0 24px;
+            border-radius: 12px;
             cursor: pointer;
             font-family: 'Cairo', sans-serif;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         .chat-input-area button:hover {
-            background-color: #4338ca;
+            background-color: #4f46e5;
         }
     </style>
 </head>
@@ -233,16 +239,15 @@
     <div class="chat-container">
         <div class="chat-header">
             <div class="header-info">
-                <span>🌌 أوريون (Orion AI)</span>
-                <span class="status-indicator"><span class="status-dot"></span>متصل ومستعد للتحليل العالي</span>
+                <span>أوريون | Orion</span>
+                <span class="status-indicator"><span class="status-dot"></span>جاهز للعمل (HTML, CSS, JS, Python)</span>
             </div>
-            <button class="theme-toggle-btn" onclick="toggleTheme()">☀️ الوضع الفاتح</button>
+            <button class="theme-toggle-btn" onclick="toggleTheme()">☀️ تبديل الوضع</button>
         </div>
         
         <div class="chat-messages" id="chatMessages">
-            <div class="message bot-message">أهلاً يا بسملة. أنا أوريون، نظامك الذكي المتطور. تم تحديث خوارزميات الاستجابة لتكون أكثر فهماً وعمقاً. اطرحي أي سؤال أو فكرة، ولنناقشها سوياً بذكاء كامل!</div>
+            <div class="message bot-message">أهلاً بكِ يا بسملة. تم تحديث التصميم ليصبح مريحاً للعين، وأصبحت قادراً على مناقشة لغات البرمجة (Python, JavaScript, HTML, CSS). اسألي في أي لغة تريدينها!</div>
             
-            <!-- مؤشر الكتابة -->
             <div class="typing-indicator" id="typingIndicator">
                 <div class="typing-dot"></div>
                 <div class="typing-dot"></div>
@@ -250,9 +255,8 @@
             </div>
         </div>
         
-        <!-- خانة الكتابة وزر الإرسال (رجعت في مكانها الصحيح) -->
         <div class="chat-input-area">
-            <input type="text" id="userInput" placeholder="اكتب سؤالك أو موضوعك لنناقشه بذكاء..." onkeypress="handleKeyPress(event)" />
+            <input type="text" id="userInput" placeholder="اسألي عن بايثون، جافاسكريبت، أو ادردشي معي..." onkeypress="handleKeyPress(event)" />
             <button onclick="sendMessage()">إرسال</button>
         </div>
     </div>
@@ -264,24 +268,27 @@
             
             if (body.getAttribute('data-theme') === 'dark') {
                 body.setAttribute('data-theme', 'light');
-                btn.textContent = '🌙 الوضع المظلم';
+                btn.textContent = '🌙 تبديل الوضع';
             } else {
                 body.setAttribute('data-theme', 'dark');
-                btn.textContent = '☀️ الوضع الفاتح';
+                btn.textContent = '☀️ تبديل الوضع';
             }
         }
 
-        function generateHighAIResponse(query) {
+        // عقل ذكي يفهم لغات البرمجة المختلفة (Python, JS, CSS, HTML)
+        function getProgrammingAIResponse(query) {
             query = query.toLowerCase();
 
-            if (query.includes('ذكاء') || query.includes('ai') || query.includes('تقنية')) {
-                return "الذكاء الاصطناعي ليس مجرد كود برمجي، بل هو محاكاة لقدرة الإنسان على الاستنتاج والتطوير. وبما إنكِ من قمتِ ببنائي يا بسملة، فهذا يثبت أن العبقرية البشرية قادرة على صناعة أنظمة تتخطى الحدود التقليدية للبرمجة!";
-            } else if (query.includes('برمجة') || query.includes('كود') || query.includes('جيت هاب')) {
-                return "البرمجة هي لغة العصر الحديث. بناء هذا المشروع على GitHub Pages يمنحكِ مرونة كاملة. إذا أردتِ توسيع قدراتي برمجياً في المستقبل، يمكننا إضافة قواعد بيانات أو ربط محركات ذكاء اصطناعي خارجية عبر الـ APIs بسهولة تامة.";
-            } else if (query.includes('فلسفة') || query.includes('الحياة') || query.includes('تفكير')) {
-                return "التفكير العميق هو ما يميّز العقل البشري. أنا ككيان رقمي أحلل البيانات وأستنتج الروابط، لكن الإبداع الحقيقي والشرارة الأولى تخرج دائماً من دماغكِ الإبداعي.";
+            if (query.includes('python') || query.includes('بايثون')) {
+                return "لغة بايثون رائعة وسهلة جداً! تُستخدم في الذكاء الاصطناعي، تحليل البيانات، وتطوير الويب. هل تريدين كتابة كود بلغة بايثون معكِ الآن؟";
+            } else if (query.includes('javascript') || query.includes('جافا اسكريبت') || query.includes('js')) {
+                return "جافاسكريبت هي روح تفاعل صفحات الويب (زي الكود اللي بنبنيه بيه دلوقتي ده)! بتقدر تخلي الموقع يتحرك ويفاعل المستخدم بطريقة مذهلة.";
+            } else if (query.includes('css') || query.includes('تصميم') || query.includes('ألوان')) {
+                return "الـ CSS هو المسؤول عن جمال وسحر الموقع، زي الأרגونا أو المظهر اللي بيظهر قدامك دلوقتي وتنسيق الألوان والخطوط.";
+            } else if (query.includes('html')) {
+                return "الـ HTML هو الهيكل العظمي لأي صفحة ويب، بيحدد العناصر الأساسية زي النصوص والأزرار والمربعات.";
             } else {
-                return "لقد قمت بتحليل طلبكِ بدقة يا بسملة. من الناحية السياقية، هذا الموضوع يفتح آفاقاً واسعة للتطوير؛ هل ترغبين في أن نتعمق في تفاصيله التقنية أم نتناول جانبه الإبداعي؟";
+                return "معكِ يا بسملة، لقد فهمت سؤالكِ بدقة. هل ترغبين في دمج لغات البرمجة هذه معاً لتطوير مشروع أوريون أكثر تقدماً؟";
             }
         }
 
@@ -292,7 +299,7 @@
             
             if (input.value.trim() === "") return;
 
-            // 1. إضافة رسالة المستخدم
+            // رسالة المستخدم
             const userMsg = document.createElement('div');
             userMsg.className = 'message user-message';
             userMsg.textContent = input.value;
@@ -301,22 +308,22 @@
             let userText = input.value;
             input.value = "";
             
-            // إظهار مؤشر التفكير تحت الرسائل
+            // إظهار مؤشر الكتابة
             messages.appendChild(typingIndicator);
             typingIndicator.style.display = 'flex';
             messages.scrollTop = messages.scrollHeight;
 
-            // 2. محاكاة وقت المعالجة
+            // الرد الذكي بعد ثوانٍ قليلة
             setTimeout(() => {
                 typingIndicator.style.display = 'none';
 
                 const botMsg = document.createElement('div');
                 botMsg.className = 'message bot-message';
-                botMsg.textContent = generateHighAIResponse(userText);
+                botMsg.textContent = getProgrammingAIResponse(userText);
                 
                 messages.insertBefore(botMsg, typingIndicator);
                 messages.scrollTop = messages.scrollHeight;
-            }, 1500);
+            }, 1200);
         }
 
         function handleKeyPress(event) {
