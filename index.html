@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion AI - نظام الذكاء الاصطناعي</title>
+    <title>Orion AI - نظام الشركات الذكي</title>
     <style>
         body {
             margin: 0;
@@ -16,41 +16,140 @@
             align-items: center;
             height: 100vh;
         }
-        .container {
-            text-align: center;
-            background: rgba(30, 41, 59, 0.7);
-            padding: 40px;
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            height: 80vh;
+            background: rgba(30, 41, 59, 0.9);
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            max-width: 500px;
+            display: flex;
+            flex-direction: type;
+            flex-direction: column;
             border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
         }
-        h1 {
+        .chat-header {
+            background: #1e293b;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .chat-header h2 {
+            margin: 0;
             color: #38bdf8;
-            margin-bottom: 10px;
+            font-size: 20px;
         }
-        p {
-            color: #94a3b8;
-            line-height: 1.6;
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-        .badge {
-            display: inline-block;
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        .ai-message {
+            background: #334155;
+            align-self: flex-start;
+            color: #f8fafc;
+        }
+        .user-message {
+            background: #0284c7;
+            align-self: flex-end;
+            color: white;
+        }
+        .chat-input-area {
+            padding: 15px;
+            background: #1e293b;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: #0f172a;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+        .chat-input-area input:focus {
+            border-color: #38bdf8;
+        }
+        .chat-input-area button {
             background: #0284c7;
             color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            margin-top: 20px;
+            border: none;
+            padding: 0 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .chat-input-area button:hover {
+            background: #0369a1;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Orion AI</h1>
-        <p>مرحباً بك في نظام الذكاء الاصطناعي الخاص بالشركات. تم تحديث الصفحة بنجاح وجاهزة للربط والتشغيل.</p>
-        <div class="badge">الحالة: يعمل بنجاح ✅</div>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Orion AI - مساعد الشركة الذكي</h2>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai-message">أهلاً بك يا مديرنا الكريم! أنا نظام Orion للذكاء الاصطناعي، كيف يمكنني مساعدتك في أعمال الشركة اليوم؟</div>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">إرسال</button>
+        </div>
     </div>
+
+    <script>
+        function sendMessage() {
+            const inputField = document.getElementById('userInput');
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageText = inputField.value.trim();
+
+            if (messageText === '') return;
+
+            // رسالة المستخدم
+            const userDiv = document.createElement('div');
+            userDiv.classList.add('message', 'user-message');
+            userDiv.textContent = messageText;
+            messagesContainer.appendChild(userDiv);
+
+            inputField.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // رد تجريبي من الذكاء الاصطناعي
+            setTimeout(() => {
+                const aiDiv = document.createElement('div');
+                aiDiv.classList.add('message', 'ai-message');
+                aiDiv.textContent = "تم استلام رسالتك بنجاح. هذا نموذج مبدئي (Prototype) وجاهز للربط بالخوادم وقواعد البيانات الخاصة بشركتك.";
+                messagesContainer.appendChild(aiDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
 
 </body>
 </html>
