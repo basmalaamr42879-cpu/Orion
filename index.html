@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion AI - نظام الشركات الذكي</title>
+    <title>Orion AI - المساعد الذكي</title>
     <style>
         body {
             margin: 0;
@@ -24,7 +24,6 @@
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             display: flex;
-            flex-direction: type;
             flex-direction: column;
             border: 1px solid rgba(255,255,255,0.1);
             overflow: hidden;
@@ -54,6 +53,7 @@
             border-radius: 12px;
             line-height: 1.5;
             font-size: 14px;
+            word-wrap: break-word;
         }
         .ai-message {
             background: #334155;
@@ -104,28 +104,28 @@
 
     <div class="chat-container">
         <div class="chat-header">
-            <h2>Orion AI - مساعد الشركة الذكي</h2>
+            <h2>Orion AI</h2>
         </div>
         
         <div class="chat-messages" id="chatMessages">
-            <div class="message ai-message">أهلاً بك يا مديرنا الكريم! أنا نظام Orion للذكاء الاصطناعي، كيف يمكنني مساعدتك في أعمال الشركة اليوم؟</div>
+            <div class="message ai-message">مرحباً بك، أنا أوريون مساعدك الذكي.</div>
         </div>
 
         <div class="chat-input-area">
-            <input type="text" id="userInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
+            <input type="text" id="userInput" placeholder="اكتب أمرك أو سؤالك هنا..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()">إرسال</button>
         </div>
     </div>
 
     <script>
-        function sendMessage() {
+        async function sendMessage() {
             const inputField = document.getElementById('userInput');
             const messagesContainer = document.getElementById('chatMessages');
             const messageText = inputField.value.trim();
 
             if (messageText === '') return;
 
-            // رسالة المستخدم
+            // إظهار رسالة المستخدم
             const userDiv = document.createElement('div');
             userDiv.classList.add('message', 'user-message');
             userDiv.textContent = messageText;
@@ -134,14 +134,27 @@
             inputField.value = '';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            // رد تجريبي من الذكاء الاصطناعي
-            setTimeout(() => {
-                const aiDiv = document.createElement('div');
-                aiDiv.classList.add('message', 'ai-message');
-                aiDiv.textContent = "تم استلام رسالتك بنجاح. هذا نموذج مبدئي (Prototype) وجاهز للربط بالخوادم وقواعد البيانات الخاصة بشركتك.";
-                messagesContainer.appendChild(aiDiv);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }, 1000);
+            // إضافة رسالة مؤقتة أثناء التفكير وتحليل المدخلات
+            const aiDiv = document.createElement('div');
+            aiDiv.classList.add('message', 'ai-message');
+            aiDiv.textContent = "جاري تحليل الأمر وتوليد النتيجة...";
+            messagesContainer.appendChild(aiDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            try {
+                // محاكاة تحليل المدخلات بذكاء حقيقي (يمكن ربطها بمحرك ذكاء اصطناعي فعلي لاحقاً)
+                setTimeout(() => {
+                    if (messageText.includes("من صنعك") || messageText.includes("مين اللى عاملك")) {
+                        aiDiv.textContent = "تم تصميمي وبرمجتي بواسطة بسملة.";
+                    } else {
+                        aiDiv.textContent = `لقد استقبلت مدخلاتك وفهمت الأمر: "${messageText}". يتم الآن معالجة البيانات وإظهار النتائج بناءً على النظريات والقواعد المتاحة للنظام.`;
+                    }
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1000);
+
+            } catch (error) {
+                aiDiv.textContent = "عذراً، حدث خطأ أثناء تحليل المدخلات.";
+            }
         }
 
         function handleKeyPress(event) {
