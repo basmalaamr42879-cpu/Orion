@@ -112,13 +112,13 @@
         </div>
 
         <div class="chat-input-area">
-            <input type="text" id="userInput" placeholder="اكتب أمرك أو سؤالك هنا..." onkeypress="handleKeyPress(event)">
+            <input type="text" id="userInput" placeholder="اكتب سؤالك أو أمرك للشركة هنا..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()">إرسال</button>
         </div>
     </div>
 
     <script>
-        async function sendMessage() {
+        function sendMessage() {
             const inputField = document.getElementById('userInput');
             const messagesContainer = document.getElementById('chatMessages');
             const messageText = inputField.value.trim();
@@ -134,27 +134,32 @@
             inputField.value = '';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            // إضافة رسالة مؤقتة أثناء التفكير وتحليل المدخلات
+            // رسالة جاري التحليل
             const aiDiv = document.createElement('div');
             aiDiv.classList.add('message', 'ai-message');
-            aiDiv.textContent = "جاري تحليل الأمر وتوليد النتيجة...";
+            aiDiv.textContent = "جاري تحليل المدخلات...";
             messagesContainer.appendChild(aiDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            try {
-                // محاكاة تحليل المدخلات بذكاء حقيقي (يمكن ربطها بمحرك ذكاء اصطناعي فعلي لاحقاً)
-                setTimeout(() => {
-                    if (messageText.includes("من صنعك") || messageText.includes("مين اللى عاملك")) {
-                        aiDiv.textContent = "تم تصميمي وبرمجتي بواسطة بسملة.";
-                    } else {
-                        aiDiv.textContent = `لقد استقبلت مدخلاتك وفهمت الأمر: "${messageText}". يتم الآن معالجة البيانات وإظهار النتائج بناءً على النظريات والقواعد المتاحة للنظام.`;
-                    }
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }, 1000);
+            // تحليل ذكي محلي بناءً على الكلمات المفتاحية
+            setTimeout(() => {
+                const text = messageText.toLowerCase();
 
-            } catch (error) {
-                aiDiv.textContent = "عذراً، حدث خطأ أثناء تحليل المدخلات.";
-            }
+                if (text.includes("من صنعك") || text.includes("مين اللى عاملك") || text.includes("مبرمجه")) {
+                    aiDiv.textContent = "تم تصميمي وبرمجتي بواسطة بسملة.";
+                } 
+                else if (text.includes("خدمات") || text.includes("الشركة") || text.includes("شغلنا")) {
+                    aiDiv.textContent = "نظام أوريون مصمم لمساعدة شركتك في تنظيم المهام، تحليل البيانات، وتقديم دعم سريع ومباشر.";
+                }
+                else if (text.includes("مرحبا") || text.includes("ازيك") || text.includes("السلام")) {
+                    aiDiv.textContent = "أهلاً بك! أنا جاهز لتلقي أوامرك وتحليل البيانات المطلوبة.";
+                }
+                else {
+                    aiDiv.textContent = `تم استقبال وتحليل الأمر بنجاح: "${messageText}". النظام يعمل محلياً بكفاءة وجاهز لتنفيذ المهام المخصصة.`;
+                }
+
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 800);
         }
 
         function handleKeyPress(event) {
